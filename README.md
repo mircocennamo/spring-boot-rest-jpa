@@ -1,6 +1,6 @@
-# Spring Boot with Kafka Producer Example
+# Spring Boot with Rest and Jpa 
 
-This Project covers how to use Spring Boot with Rest and Jpa Spring 
+This Project covers how to use Spring Boot with Rest and Jpa  
 
 ## Call 
 ## Retrieve all students

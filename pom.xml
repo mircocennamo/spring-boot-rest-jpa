@@ -8,7 +8,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>jar</packaging>
 
-	<name>spring-boot-kafka-producer</name>
+	<name>spring-boot-rest-jpa</name>
 	<description>Demo project Rest Jpa for Spring Boot</description>
 
 	<parent>
