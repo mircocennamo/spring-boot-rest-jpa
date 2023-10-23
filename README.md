@@ -6,5 +6,16 @@ This Project covers how to use Spring Boot with Rest and Jpa Spring
 ## Retrieve all students
 - curl --location 'http://localhost:8081/avanade/students'
 
+# Create new student
+
+curl --location 'localhost:8081/avanade/newstudent' --header 'Content-Type: application/json' --data '{
+"name":"Pietro",
+"passportNumber": "33333",
+"courses": [{
+"id":"2",
+"name":"c"
+}]
+}'
+
 
 

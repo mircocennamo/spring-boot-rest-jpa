@@ -20,9 +20,6 @@ public class Course {
     private Long id;
     private String name;
 
-    @ManyToMany
-    Set<Student> students;
-
     public Course(String name) {
         this.name = name;
     }

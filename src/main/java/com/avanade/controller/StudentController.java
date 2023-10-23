@@ -1,10 +1,9 @@
 package com.avanade.controller;
 
+import com.avanade.exception.EntityNotFoundException;
 import com.avanade.model.Student;
 import com.avanade.repository.StudentJpaRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,6 +22,19 @@ class StudentController {
 	@GetMapping("/students")
 	List<Student> all() {
 		return  repository.findAll();
+	}
+
+	@GetMapping("/student/{id}")
+	Student id(@PathVariable Long id) {
+
+		return repository.findById(id)
+				.orElseThrow(() -> new EntityNotFoundException(id));
+	}
+
+	@PostMapping("/newstudent")
+	Student newEmployee(@RequestBody Student newStudent) {
+
+		return repository.save(newStudent);
 	}
 
 }
