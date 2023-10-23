@@ -1,8 +1,7 @@
 package com.avanade.controller;
 
-import com.avanade.exception.EntityNotFoundException;
+import com.avanade.exception.CourseNotFoundException;
 import com.avanade.model.Course;
-import com.avanade.model.Student;
 import com.avanade.repository.CourseJpaRepository;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,7 +31,7 @@ class CourseController {
 	Course id(@PathVariable Long id) {
 
 		return repository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException(id));
+				.orElseThrow(() -> new CourseNotFoundException(id));
 	}
 
 }

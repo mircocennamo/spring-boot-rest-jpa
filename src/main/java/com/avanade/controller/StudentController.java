@@ -1,6 +1,6 @@
 package com.avanade.controller;
 
-import com.avanade.exception.EntityNotFoundException;
+import com.avanade.exception.StudentNotFoundException;
 import com.avanade.model.Student;
 import com.avanade.repository.StudentJpaRepository;
 import org.springframework.web.bind.annotation.*;
@@ -28,7 +28,7 @@ class StudentController {
 	Student id(@PathVariable Long id) {
 
 		return repository.findById(id)
-				.orElseThrow(() -> new EntityNotFoundException(id));
+				.orElseThrow(() -> new StudentNotFoundException(id));
 	}
 
 	@PostMapping("/newstudent")
