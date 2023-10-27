@@ -1,12 +1,10 @@
 package com.avanade.controller;
 
-import com.avanade.exception.CourseNotFoundException;
 import com.avanade.model.Course;
-import com.avanade.repository.CourseJpaRepository;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.avanade.service.CourseService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -15,23 +13,24 @@ import java.util.List;
 @RequestMapping("avanade")
 class CourseController {
 
-	private final CourseJpaRepository repository;
-
-	CourseController(CourseJpaRepository repository) {
-		this.repository = repository;
-	}
+	@Autowired
+	CourseService courseService;
 
 
 	@GetMapping("/courses")
 	List<Course> all() {
-		return  repository.findAll();
+		return  courseService.findAll();
 	}
 
 	@GetMapping("/course/{id}")
 	Course id(@PathVariable Long id) {
+		return courseService.findById(id);
+	}
 
-		return repository.findById(id)
-				.orElseThrow(() -> new CourseNotFoundException(id));
+	@PostMapping("/course/new")
+	public Course create(@Valid @RequestBody Course course) {
+		return courseService.save(course);
+
 	}
 
 }

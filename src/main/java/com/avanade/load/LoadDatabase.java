@@ -1,6 +1,7 @@
 package com.avanade.load;
 
 import com.avanade.model.Course;
+import com.avanade.model.LevelStatus;
 import com.avanade.model.Student;
 import com.avanade.repository.CourseJpaRepository;
 import com.avanade.repository.StudentJpaRepository;
@@ -30,9 +31,9 @@ class LoadDatabase {
 	@Bean
 	CommandLineRunner initDatabase() {
 
-		Course courseJava = new Course("java");
-		Course courseC = new Course("c");
-		Course courseSql = new Course("sql");
+		Course courseJava = new Course("language java", LevelStatus.ADVANCED);
+		Course courseC = new Course("language c",LevelStatus.ADVANCED);
+		Course courseSql = new Course("language sql",LevelStatus.BASIC);
 		Student pippo = new Student("Pippo","12345" );
 		Student pluto = new Student("Pluto","8765" );
 

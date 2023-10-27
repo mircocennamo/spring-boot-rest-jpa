@@ -1,8 +1,9 @@
 package com.avanade.controller;
 
-import com.avanade.exception.StudentNotFoundException;
 import com.avanade.model.Student;
-import com.avanade.repository.StudentJpaRepository;
+import com.avanade.service.StudentService;
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,29 +13,22 @@ import java.util.List;
 @RequestMapping("avanade")
 class StudentController {
 
-	private final StudentJpaRepository repository;
+    @Autowired
+    private StudentService studentService;
 
-	StudentController(StudentJpaRepository repository) {
-		this.repository = repository;
-	}
+    @GetMapping("/students")
+    List<Student> all() {
+        return studentService.findAll();
+    }
 
+    @GetMapping("/student/{id}")
+    Student id(@PathVariable Long id) {
+        return studentService.findById(id);
+    }
 
-	@GetMapping("/students")
-	List<Student> all() {
-		return  repository.findAll();
-	}
-
-	@GetMapping("/student/{id}")
-	Student id(@PathVariable Long id) {
-
-		return repository.findById(id)
-				.orElseThrow(() -> new StudentNotFoundException(id));
-	}
-
-	@PostMapping("/newstudent")
-	Student newEmployee(@RequestBody Student newStudent) {
-
-		return repository.save(newStudent);
-	}
+    @PostMapping("/newstudent")
+    Student newEmployee(@Valid @RequestBody Student newStudent) {
+        return studentService.save(newStudent);
+    }
 
 }

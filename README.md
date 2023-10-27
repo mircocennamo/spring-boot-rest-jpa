@@ -13,7 +13,8 @@ curl --location 'localhost:8081/avanade/newstudent' --header 'Content-Type: appl
 "passportNumber": "33333",
 "courses": [{
 "id":"2",
-"name":"c"
+"name":"c plus plus",
+"level":"BASIC"
 }]
 }'
 
