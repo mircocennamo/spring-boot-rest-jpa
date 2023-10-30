@@ -22,5 +22,7 @@ curl --location 'localhost:8081/avanade/newstudent' --header 'Content-Type: appl
 ## Link to view H2 Console
 - http://localhost:8081/h2-console/
 
+## Link to view Swagger-ui
+- http://localhost:8081/swagger-ui/index.html
 
 
