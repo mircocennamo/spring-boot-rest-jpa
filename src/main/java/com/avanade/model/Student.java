@@ -1,7 +1,8 @@
 package com.avanade.model;
 
-import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.*;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.ManyToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,12 +16,9 @@ import java.util.Set;
 @NoArgsConstructor
 @ToString
 @Entity
-public class Student {
+public class Student extends BaseEntity {
 
-    @Id
-    @GeneratedValue
-    @Schema(accessMode = Schema.AccessMode.READ_ONLY)
-    private Long id;
+
 
     @NotNull
     private String name;

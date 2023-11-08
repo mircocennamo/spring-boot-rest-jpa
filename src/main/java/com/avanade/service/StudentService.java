@@ -4,6 +4,7 @@ import com.avanade.exception.CourseNotFoundException;
 import com.avanade.exception.StudentNotFoundException;
 import com.avanade.model.Student;
 import com.avanade.repository.StudentJpaRepository;
+import com.avanade.viewmodel.StudentCorsesVm;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,8 +25,8 @@ public class StudentService {
         return repository.findAll();
     }
 
-    public Student findById(Long id) throws CourseNotFoundException{
-        return repository.findById(id).orElseThrow(() -> new StudentNotFoundException(id));
+    public StudentCorsesVm findById(Long id) throws CourseNotFoundException{
+        return StudentCorsesVm.fromModel(repository.findById(id).orElseThrow(() -> new StudentNotFoundException(id)));
     }
 
     public Student save(Student student) {
