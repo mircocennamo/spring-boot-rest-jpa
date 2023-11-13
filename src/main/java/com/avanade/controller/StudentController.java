@@ -19,8 +19,8 @@ class StudentController {
     private StudentService studentService;
 
     @GetMapping("/students")
-    List<Student> all() {
-        return studentService.findAll();
+    ResponseEntity<List<StudentCorsesVm>> all() {
+        return ResponseEntity.ok(studentService.findAll());
     }
 
     @GetMapping("/student/{id}")
@@ -29,8 +29,8 @@ class StudentController {
     }
 
     @PostMapping("/newstudent")
-    Student newEmployee(@Valid @RequestBody Student newStudent) {
-        return studentService.save(newStudent);
+    ResponseEntity<StudentCorsesVm> newEmployee(@Valid @RequestBody Student newStudent) {
+        return ResponseEntity.ok(studentService.save(newStudent));
     }
 
 }

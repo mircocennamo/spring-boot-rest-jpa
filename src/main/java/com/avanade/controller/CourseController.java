@@ -2,6 +2,7 @@ package com.avanade.controller;
 
 import com.avanade.model.Course;
 import com.avanade.service.CourseService;
+import com.avanade.viewmodel.CorseVm;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -9,6 +10,7 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,8 +25,8 @@ class CourseController {
 
 
 	@GetMapping("/courses")
-	List<Course> all() {
-		return  courseService.findAll();
+	ResponseEntity<List<CorseVm>> all() {
+		return  ResponseEntity.ok(courseService.findAll());
 	}
 
 
@@ -38,13 +40,13 @@ class CourseController {
 			@ApiResponse(responseCode = "404", description = "Course not found",
 					content = @Content) })
 	@GetMapping("/course/{id}")
-	Course id(@PathVariable Long id) {
-		return courseService.findById(id);
+	ResponseEntity<CorseVm> id(@PathVariable Long id) {
+		return ResponseEntity.ok(courseService.findById(id));
 	}
 
 	@PostMapping("/course/new")
-	public Course create(@Valid @RequestBody Course course) {
-		return courseService.save(course);
+	public ResponseEntity<CorseVm> create(@Valid @RequestBody Course course) {
+		return ResponseEntity.ok(courseService.save(course));
 
 	}
 
