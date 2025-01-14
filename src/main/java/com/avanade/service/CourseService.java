@@ -4,10 +4,12 @@ import com.avanade.exception.CourseNotFoundException;
 import com.avanade.model.Course;
 import com.avanade.repository.CourseJpaRepository;
 import com.avanade.viewmodel.CorseVm;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 /**
@@ -31,5 +33,24 @@ public class CourseService {
 
     public CorseVm save(Course course) {
         return CorseVm.fromModel(repository.save(course));
+    }
+
+    public void deleteById(Long id) {
+        repository.deleteById(id);
+    }
+
+    public void deleteAll() {
+        repository.deleteAll();
+    }
+
+
+    public CorseVm update(Long id, @Valid Course courseNew) {
+       Optional<Course> courseOld =  repository.findById(id);
+       if(courseOld.isEmpty())
+           throw new CourseNotFoundException(id);
+       courseOld.get().setName(courseNew.getName());
+       courseOld.get().setLevel(courseNew.getLevel());
+       return CorseVm.fromModel(repository.save(courseOld.get()));
+
     }
 }

@@ -12,8 +12,14 @@ import java.util.stream.Collectors;
 public record StudentCorsesVm(String studentName, List<String> coursesName) {
 
     public static StudentCorsesVm fromModel(Student student) {
-        List<String> coursesName =
-        student.getCourses().stream().map(course -> course.getName()).collect(Collectors.toList());
+
+        List<String> coursesName= null;
+
+        if(student.getCourses()!=null){
+            coursesName = student.getCourses().stream().map(course -> course.getName()).collect(Collectors.toList());
+        }
+
+
         return new StudentCorsesVm(student.getName(), coursesName);
     }
 }

@@ -26,6 +26,8 @@ public class Student extends BaseEntity {
     @NotNull
     private String passportNumber;
 
+
+
     @ManyToMany(cascade = { CascadeType.MERGE})
     Set<Course> courses;
 
@@ -33,4 +35,6 @@ public class Student extends BaseEntity {
         this.name = name;
         this.passportNumber = passportNumber;
     }
+
+
 }

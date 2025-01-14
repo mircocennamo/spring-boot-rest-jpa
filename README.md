@@ -19,6 +19,14 @@ curl --location 'localhost:8081/avanade/newstudent' --header 'Content-Type: appl
 }'
 
 
+curl --location --request PUT 'http://localhost:8081/avanade/course/update/1' \
+--header 'Content-Type: application/json' \
+--data '{
+    "name": "Java Advanced",
+    "level": "ADVANCED"
+}'
+
+
 ## Link to view H2 Console
 - http://localhost:8081/h2-console/
 
