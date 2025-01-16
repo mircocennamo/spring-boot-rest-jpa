@@ -35,4 +35,8 @@ public class StudentService {
     public StudentCorsesVm save(Student student) {
         return  StudentCorsesVm.fromModel(repository.save(student));
     }
+
+    public List<Student> findByPassportNumber(String passportNumber) {
+        return repository.findByPassportNumber(passportNumber);
+    }
 }

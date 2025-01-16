@@ -34,5 +34,10 @@ class StudentController {
     }
 
 
+    @GetMapping("/student/passport/{passportNumber}")
+    ResponseEntity<List<Student>>  passport(@PathVariable String passportNumber) {
+        return  ResponseEntity.ok(studentService.findByPassportNumber(passportNumber));
+    }
+
 
 }
