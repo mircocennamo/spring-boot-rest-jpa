@@ -5,6 +5,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.openfeign.EnableFeignClients;
 
 import java.util.ArrayList;
 import java.util.Base64;
@@ -12,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @SpringBootApplication
+@EnableFeignClients
 public class SpringBootRestJpaApplication {
 
     private final Logger LOGGER = LoggerFactory.getLogger(this.getClass());

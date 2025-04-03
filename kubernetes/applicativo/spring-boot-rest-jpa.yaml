@@ -6,18 +6,19 @@ metadata:
   name: spring-boot-rest-jpa-config
 data:
   URL_DATASOURCE: "jdbc:h2:mem:testdb"
+  PING_SERVICE: "http://ping-service:8090"
 
 
 ---
 # necessario per mappare le proprietà sensibili del servizio spring-boot-rest-jpa
-
+# "username" base64 encoded  echo -n 'sa' | base64 dove 'sa' è il valore originale
 apiVersion: v1
 kind: Secret
 metadata:
   name: spring-boot-rest-jpa-secret
 type: Opaque
 data:
-  USERNAME: "c2E="  # "username" base64 encoded  echo -n 'sa' | base64 dove 'sa' è il valore originale
+  USERNAME: "c2E="
 
 
 ---
