@@ -39,6 +39,7 @@ spec:
       labels:
         app: spring-boot-rest-jpa
     spec:
+      serviceAccountName: spring-app-sa # Utilizzo del ServiceAccount per eccedere, il pod deve utilizzare il ServiceAccount con i permessi necessari per accedere alle risorse Kubernetes richieste per il service discovery e il load balancing.
       containers:
         - name: spring-boot-rest-jpa
           image: mircocennamo82/my-repo:spring-boot-rest-jpa
@@ -92,3 +93,15 @@ spec:
                 name: spring-boot-rest-jpa
                 port:
                   number: 8081
+
+---
+
+# service per accedere ai servizi presenti sulla macchina docker esterno al cluster k8s
+apiVersion: v1
+kind: Service
+metadata:
+  name: host-docker-service
+spec:
+  type: ExternalName
+  externalName: host.docker.internal
+
