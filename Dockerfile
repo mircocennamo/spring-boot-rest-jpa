@@ -23,3 +23,5 @@ COPY --from=build /app/target/rest-jpa-0.0.1-SNAPSHOT.jar app.jar
 
 # Set the user to run the application
 CMD ["java", "-XX:MaxRAMPercentage=80.0", "-jar", "app.jar"]
+
+CMD ["java", "-XX:MaxRAMPercentage=80.0", "-javaagent:execute/elastic-apm-agent-<version>.jar", "-Delastic.apm.service_name=my-service-name", "-Delastic.apm.secret_token=", "-Delastic.apm.server_url=http://localhost:8200", "-Delastic.apm.environment=my-environment", "-Delastic.apm.application_packages=org.example", "-jar", "app.jar"]

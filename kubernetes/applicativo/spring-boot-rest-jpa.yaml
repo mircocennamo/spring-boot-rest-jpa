@@ -39,6 +39,13 @@ spec:
       labels:
         app: spring-boot-rest-jpa
     spec:
+      initContainers:
+        - name: copy-apm-agent
+          image: docker.elastic.co/observability/apm-agent-java:latest
+          command: [ "cp", "/usr/agent/elastic-apm-agent.jar", "/agent/" ]
+          volumeMounts:
+            - name: apm-agent
+              mountPath: /agent
       serviceAccountName: spring-app-sa # Utilizzo del ServiceAccount per eccedere, il pod deve utilizzare il ServiceAccount con i permessi necessari per accedere alle risorse Kubernetes richieste per il service discovery e il load balancing.
       containers:
         - name: spring-boot-rest-jpa
@@ -50,6 +57,23 @@ spec:
                 name: spring-boot-rest-jpa-config
             - secretRef:
                 name: spring-boot-rest-jpa-secret
+          env:
+            - name: JAVA_TOOL_OPTIONS
+              value: >
+                -javaagent:/agent/elastic-apm-agent.jar
+                -Delastic.apm.service_name=spring-boot-rest-jpa
+                -Delastic.apm.server_url=https://my-observability-project-bd1fd9.apm.us-east-1.aws.elastic.cloud:443
+                -Delastic.apm.api_key=V0hDQ0VKWUJhaUo4R2V6cXdERUg6cG0xZWJLM1NsVkRGNS1fUkJwci1rQQ==
+                -Delastic.apm.application_packages=com.avanade
+                -DDelastic.apm.environment=development
+                -XX:+UseContainerSupport -XX:MaxRAMPercentage=75
+          volumeMounts:
+            - name: apm-agent
+              mountPath: /agent
+      volumes:
+        - name: apm-agent
+          emptyDir: {}
+
 
 
 ---
@@ -104,4 +128,15 @@ metadata:
 spec:
   type: ExternalName
   externalName: host.docker.internal
+
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: elastic-service
+spec:
+  type: ExternalName
+  externalName: my-observability-project-bd1fd9.apm.us-east-1.aws.elastic.cloud
 

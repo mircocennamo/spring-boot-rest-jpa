@@ -9,10 +9,16 @@ kind: Role
 metadata:
   name: service-discovery-role
   namespace: default
-rules:
-  - apiGroups: [""]
-    resources: ["services", "endpoints", "pods"]
-    verbs: ["get", "list", "watch"]
+rules:  # Definisce i permessi specific
+  - apiGroups: [""] #Il gruppo API vuoto ("") rappresenta le API core di Kubernetes.
+    resources: ["services", "endpoints", "pods"] #Specifica le risorse a cui è consentito l'accesso 
+    # services : Informazioni sui servizi Kubernetes endpoints 
+    # Endpoint dei servizi (indirizzi IP e porte dei pod) ; 
+    # pods : Informazioni sui pod in esecuzione
+    verbs: ["get", "list", "watch"] #verbs : Azioni consentite su queste risorse
+     # get : Ottenere una singola risorsa
+     # list : Elencare tutte le risorse di un tipo
+     # watch : Ottenere notifiche in tempo reale per le modifiche alle risorse
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -27,3 +33,25 @@ roleRef:
   kind: Role
   name: service-discovery-role
   apiGroup: rbac.authorization.k8s.io
+
+# - apiVersion: rbac.authorization.k8s.io/v1 : Utilizza l'API RBAC di Kubernetes.
+# - kind: RoleBinding : Collega un ruolo a uno o più soggetti.
+# - metadata : Informazioni identificative del binding.
+# - subjects : Specifica a chi viene assegnato il ruolo:
+# - kind: ServiceAccount : Il tipo di soggetto è un ServiceAccount
+# - name: spring-app-sa : Il nome del ServiceAccount creato nella prima sezione
+# - namespace: default : Il namespace in cui esiste il ServiceAccount
+# - roleRef : Specifica quale ruolo viene assegnato:
+# - kind: Role : Si riferisce a un Role (non a un ClusterRole)
+# - name: service-discovery-role : Il nome del ruolo definito nella seconda sezione
+# - apiGroup: rbac.authorization.k8s.io : Il gruppo API a cui appartiene il ruolo
+
+## Funzionamento complessivo
+# Questo file YAML crea un sistema di autorizzazioni che permette alla tua applicazione Spring Boot di:
+
+# 1. Avere un'identità specifica nel cluster Kubernetes (ServiceAccount)
+# 2. Definire i permessi necessari per il service discovery (Role)
+# 3. Collegare questi permessi all'identità dell'applicazione (RoleBinding)
+# Quando il tuo deployment specifica serviceAccountName: spring-app-sa , 
+# i pod avranno i permessi per elencare e osservare servizi, endpoint e pod nel namespace default, 
+# consentendo a Spring Cloud Kubernetes di implementare correttamente il service discovery e il load balancing.
